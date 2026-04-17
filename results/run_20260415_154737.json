@@ -1,0 +1,233 @@
+[
+  {
+    "vendor": "ScrapingBee",
+    "url": "https://httpbin.org/html",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 1539.09,
+    "content_length": 3741,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:42.981420+00:00"
+  },
+  {
+    "vendor": "ScrapingBee",
+    "url": "https://books.toscrape.com/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 1557.2,
+    "content_length": 51294,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:42.999755+00:00"
+  },
+  {
+    "vendor": "ScrapingBee",
+    "url": "https://quotes.toscrape.com/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 1680.43,
+    "content_length": 11064,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:43.122895+00:00"
+  },
+  {
+    "vendor": "ScrapingBee",
+    "url": "https://quotes.toscrape.com/js/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 1657.91,
+    "content_length": 8985,
+    "credits_used": 5.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:44.640656+00:00"
+  },
+  {
+    "vendor": "Crawlbase",
+    "url": "https://httpbin.org/get",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 1748.41,
+    "content_length": 1124,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:46.393500+00:00"
+  },
+  {
+    "vendor": "ScrapingBee",
+    "url": "https://httpbin.org/delay/2",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 4075.44,
+    "content_length": 935,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:47.076183+00:00"
+  },
+  {
+    "vendor": "Crawlbase",
+    "url": "https://httpbin.org/html",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 2204.01,
+    "content_length": 3741,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:48.598781+00:00"
+  },
+  {
+    "vendor": "Crawlbase",
+    "url": "https://quotes.toscrape.com/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 2037.36,
+    "content_length": 11064,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:49.116211+00:00"
+  },
+  {
+    "vendor": "ScrapingBee",
+    "url": "https://httpbin.org/status/403",
+    "success": false,
+    "status_code": 500,
+    "response_time_ms": 6515.33,
+    "content_length": 339,
+    "credits_used": 10.0,
+    "error": "{\"error\": \"Error with your request, please try again (you will not be charged for this request).You should: 1) check that your URL is correctly encoded 2) try with render_js=True (5 credits per request) Do not hesitate to check our troubleshooting guide:https://www.scrapingbee.com/help\", \"reason\": \"",
+    "timestamp": "2026-04-15T15:46:49.638989+00:00"
+  },
+  {
+    "vendor": "Crawlbase",
+    "url": "https://books.toscrape.com/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 1936.38,
+    "content_length": 51294,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:50.538782+00:00"
+  },
+  {
+    "vendor": "Crawlbase",
+    "url": "https://quotes.toscrape.com/js/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 1733.18,
+    "content_length": 5808,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:50.849880+00:00"
+  },
+  {
+    "vendor": "Crawlbase",
+    "url": "https://httpbin.org/delay/2",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 4177.07,
+    "content_length": 1051,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:53.817124+00:00"
+  },
+  {
+    "vendor": "ScraperAPI",
+    "url": "https://httpbin.org/get",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 4031.03,
+    "content_length": 898,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:54.883969+00:00"
+  },
+  {
+    "vendor": "ScraperAPI",
+    "url": "https://httpbin.org/html",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 4017.99,
+    "content_length": 3741,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:57.838670+00:00"
+  },
+  {
+    "vendor": "ScraperAPI",
+    "url": "https://quotes.toscrape.com/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 3734.57,
+    "content_length": 11064,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:46:58.621756+00:00"
+  },
+  {
+    "vendor": "ScraperAPI",
+    "url": "https://books.toscrape.com/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 7382.17,
+    "content_length": 51294,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:47:05.223417+00:00"
+  },
+  {
+    "vendor": "ScrapingBee",
+    "url": "https://httpbin.org/get",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 24343.71,
+    "content_length": 637,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:47:05.785753+00:00"
+  },
+  {
+    "vendor": "ScraperAPI",
+    "url": "https://httpbin.org/delay/2",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 5937.83,
+    "content_length": 760,
+    "credits_used": 1.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:47:11.164695+00:00"
+  },
+  {
+    "vendor": "ScraperAPI",
+    "url": "https://quotes.toscrape.com/js/",
+    "success": true,
+    "status_code": 200,
+    "response_time_ms": 13497.19,
+    "content_length": 8985,
+    "credits_used": 5.0,
+    "error": null,
+    "timestamp": "2026-04-15T15:47:12.119473+00:00"
+  },
+  {
+    "vendor": "Crawlbase",
+    "url": "https://httpbin.org/status/403",
+    "success": false,
+    "status_code": null,
+    "response_time_ms": 30548.7,
+    "content_length": 0,
+    "credits_used": 0,
+    "error": "HTTPSConnectionPool(host='api.crawlbase.com', port=443): Read timed out. (read timeout=30)",
+    "timestamp": "2026-04-15T15:47:21.089401+00:00"
+  },
+  {
+    "vendor": "ScraperAPI",
+    "url": "https://httpbin.org/status/403",
+    "success": false,
+    "status_code": null,
+    "response_time_ms": 31878.38,
+    "content_length": 0,
+    "credits_used": 0,
+    "error": "HTTPSConnectionPool(host='api.scraperapi.com', port=443): Read timed out. (read timeout=30)",
+    "timestamp": "2026-04-15T15:47:37.664697+00:00"
+  }
+]
