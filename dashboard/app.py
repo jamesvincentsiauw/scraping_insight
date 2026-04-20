@@ -13,6 +13,7 @@ import streamlit as st
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
+from dashboard.pdf_export import generate_pdf
 from scrapers import ALL_SCRAPERS
 from storage.results import load_all_runs, load_latest_run, list_runs
 
@@ -116,6 +117,7 @@ for _col, _default in [
     ("parsed_text_length", None),
     ("parsed_fields", None),
     ("returns_structured", False),
+    ("label", ""),
 ]:
     if _col not in df.columns:
         df[_col] = _default
@@ -453,3 +455,23 @@ st.dataframe(
 
 with st.expander("Raw results"):
     st.dataframe(df_f, use_container_width=True)
+
+# ── PDF Export ────────────────────────────────────────────────────────────────
+
+st.divider()
+st.subheader("Export")
+
+if st.button("Generate PDF report"):
+    with st.spinner("Building PDF…"):
+        try:
+            pdf_bytes = generate_pdf(df_f, summary, VENDOR_META, insights)
+            from datetime import datetime, timezone
+            ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+            st.download_button(
+                label="Download PDF",
+                data=pdf_bytes,
+                file_name=f"scraper_insight_{ts}.pdf",
+                mime="application/pdf",
+            )
+        except Exception as exc:
+            st.error(f"PDF generation failed: {exc}")

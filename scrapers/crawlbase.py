@@ -61,6 +61,7 @@ class CrawlbaseScraper(BaseScraper):
                 credits_used=1.0,
                 estimated_cost_usd=self._estimate_cost(1.0),
                 error=None if success else resp.text[:300],
+                raw_content=resp.content if success else None,
             )
         except Exception as exc:
             elapsed_ms = (time.perf_counter() - start) * 1000

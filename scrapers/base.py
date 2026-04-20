@@ -13,6 +13,7 @@ class ScrapeResult:
     response_time_ms: float
     content_length: int
     credits_used: float
+    label: str = ""  # set by runner from Target.label — used as folder name
     estimated_cost_usd: float = 0.0
     # Diffbot-style structured extraction fields (None for HTML-only scrapers)
     parsed_title: Optional[str] = None
@@ -23,11 +24,14 @@ class ScrapeResult:
     timestamp: str = field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
+    # Raw response bytes — saved as .html/.json file by the runner, not in metrics JSON
+    raw_content: Optional[bytes] = field(default=None, repr=False)
 
     def to_dict(self) -> dict:
         return {
             "vendor": self.vendor,
             "url": self.url,
+            "label": self.label,
             "success": self.success,
             "status_code": self.status_code,
             "response_time_ms": round(self.response_time_ms, 2),

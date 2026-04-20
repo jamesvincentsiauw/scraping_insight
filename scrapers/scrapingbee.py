@@ -71,6 +71,7 @@ class ScrapingBeeScraper(BaseScraper):
                 credits_used=credits,
                 estimated_cost_usd=self._estimate_cost(credits),
                 error=None if success else resp.text[:300],
+                raw_content=resp.content if success else None,
             )
         except Exception as exc:
             elapsed_ms = (time.perf_counter() - start) * 1000

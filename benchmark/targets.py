@@ -1,15 +1,3 @@
-"""
-Test URLs organized by difficulty tier.
-
-Tier 1 — No protection: plain HTTP, static content, scraper-friendly.
-Tier 2 — Light protection: some JS content or minor bot detection.
-Tier 3 — Heavy protection: strong anti-bot, requires residential proxy or JS.
-
-We use publicly available, scraper-friendly URLs to stay ethical.
-httpbin.org is the canonical choice for Tier 1 — it never changes and
-has no anti-bot logic.
-"""
-
 from dataclasses import dataclass
 
 
@@ -17,60 +5,28 @@ from dataclasses import dataclass
 class Target:
     url: str
     label: str
-    tier: int  # 1, 2, or 3
+    tier: int
     render_js: bool = False
     use_proxy: bool = False
     description: str = ""
 
 
 TARGETS: list[Target] = [
-    # ── Tier 1: Static / no protection ─────────────────────────────────────
-    Target(
-        url="https://httpbin.org/get",
-        label="httpbin-get",
-        tier=1,
-        description="Plain JSON response, zero bot protection",
-    ),
-    Target(
-        url="https://httpbin.org/html",
-        label="httpbin-html",
-        tier=1,
-        description="Simple HTML page from httpbin",
-    ),
-    Target(
-        url="https://quotes.toscrape.com/",
-        label="quotes-toscrape",
-        tier=1,
-        description="Intentionally scrapable quotes site",
-    ),
-    Target(
-        url="https://books.toscrape.com/",
-        label="books-toscrape",
-        tier=1,
-        description="Intentionally scrapable books catalogue",
-    ),
-    # ── Tier 2: Light JS / mild protection ────────────────────────────────
-    Target(
-        url="https://quotes.toscrape.com/js/",
-        label="quotes-toscrape-js",
-        tier=2,
-        render_js=True,
-        description="JS-rendered version of quotes.toscrape.com",
-    ),
-    Target(
-        url="https://httpbin.org/delay/2",
-        label="httpbin-slow",
-        tier=2,
-        description="Slow endpoint to test timeout handling",
-    ),
     Target(
         url="https://www.sae.org/professional-development/advanced-technologies",
         label="sae-advanced-tech",
         tier=2,
         render_js=True,
-        description="SAE professional development page — real-world content-rich article, JS rendered",
+        use_proxy=True,
+        description="SAE professional development page — content-rich, JS rendered",
     ),
-    # ── Tier 3: Anti-bot / requires proxy + JS ────────────────────────────
+    Target(
+        url="https://www.mas.gov.sg/regulation/regulations-and-guidance?content_type=Notices",
+        label="mas-regulation-notices",
+        tier=2,
+        render_js=True,
+        description="MAS (Monetary Authority of Singapore) regulatory notices — JS-rendered table",
+    ),
     Target(
         url="https://httpbin.org/status/403",
         label="httpbin-403",

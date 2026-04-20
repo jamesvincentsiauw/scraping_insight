@@ -5,17 +5,22 @@ Usage:
     cd scraper_insight
     python -m benchmark.runner                  # all targets, all vendors
     python -m benchmark.runner --tier 1         # only tier-1 targets
+    python -m benchmark.runner --tier 2         # tier-2 targets (includes SAE + MAS)
+    python -m benchmark.runner --label sae-advanced-tech mas-regulation-notices
     python -m benchmark.runner --vendor scrapingbee scrapfly
-    python -m benchmark.runner --runs 3         # repeat each target N times (averages)
+    python -m benchmark.runner --runs 3         # repeat each target N times
 """
 
 import argparse
+import re
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
 
 sys.path.insert(0, "..")
 
 from benchmark.targets import TARGETS, Target
+from config import RESULTS_DIR
 from scrapers import ALL_SCRAPERS, BaseScraper, ScrapeResult
 from storage.results import save_run
 
@@ -28,24 +33,33 @@ def _scrape_one(scraper: BaseScraper, target: Target) -> ScrapeResult:
     )
 
 
+def _safe_dirname(name: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9_\-]", "_", name).strip("_") or "unknown"
+
+
+def _save_html(result: ScrapeResult) -> None:
+    """Write raw_content to results/<target-label>/<Vendor>.html (or .json for Diffbot)."""
+    if not result.raw_content:
+        return
+    target_dir = Path(RESULTS_DIR) / _safe_dirname(result.label)
+    target_dir.mkdir(parents=True, exist_ok=True)
+    ext = "json" if result.returns_structured else "html"
+    out = target_dir / f"{result.vendor}.{ext}"
+    out.write_bytes(result.raw_content)
+
+
 def run_benchmark(
     tier_filter: int | None = None,
+    label_filter: list[str] | None = None,
     vendor_filter: list[str] | None = None,
     runs: int = 1,
     workers: int = 4,
 ) -> list[dict]:
-    """
-    Run the benchmark and return a list of result dicts.
-
-    Args:
-        tier_filter:  Only run targets of this tier (1, 2, or 3). None = all.
-        vendor_filter: Only run these vendor names (case-insensitive). None = all.
-        runs:         How many times to scrape each target per vendor (averaged).
-        workers:      Thread pool size for parallel requests.
-    """
     targets = TARGETS
     if tier_filter is not None:
         targets = [t for t in targets if t.tier == tier_filter]
+    if label_filter:
+        targets = [t for t in targets if t.label in label_filter]
 
     scrapers: list[BaseScraper] = []
     for cls in ALL_SCRAPERS:
@@ -63,8 +77,8 @@ def run_benchmark(
         return []
 
     print(f"\nRunning benchmark: {len(scrapers)} vendor(s) × {len(targets)} target(s) × {runs} run(s)")
-    print(f"Vendors: {[s.vendor_name for s in scrapers]}")
-    print(f"Targets: {[t.label for t in targets]}\n")
+    print(f"Vendors : {[s.vendor_name for s in scrapers]}")
+    print(f"Targets : {[t.label for t in targets]}\n")
 
     jobs: list[tuple[BaseScraper, Target]] = [
         (scraper, target)
@@ -85,18 +99,25 @@ def run_benchmark(
                 print(f"  [{i}/{len(jobs)}] ERROR {scraper.vendor_name} → {target.label}: {exc}")
                 continue
 
+            result.label = target.label
+
+            # Save HTML/JSON file for manual comparison
+            _save_html(result)
+
+            ext = "json" if result.returns_structured else "html"
             status_icon = "✓" if result.success else "✗"
             print(
                 f"  [{i}/{len(jobs)}] {status_icon} {result.vendor:<14} "
-                f"{target.label:<25} "
+                f"{target.label:<30} "
                 f"{result.response_time_ms:>7.0f}ms  "
-                f"{result.content_length:>8} bytes  "
-                f"{result.credits_used} credit(s)"
+                f"{result.content_length:>8} bytes"
+                + (f"  → {result.vendor}.{ext}" if result.raw_content else "  (no content saved)")
             )
             all_results.append(result.to_dict())
 
     saved_path = save_run(all_results)
-    print(f"\nResults saved → {saved_path}")
+    print(f"\nMetrics saved → {saved_path}")
+    print(f"HTML files  → results/<target-label>/<Vendor>.html")
     print(f"Total results: {len(all_results)}")
     return all_results
 
@@ -104,6 +125,7 @@ def run_benchmark(
 def main():
     parser = argparse.ArgumentParser(description="Scraper Insight Benchmark Runner")
     parser.add_argument("--tier", type=int, choices=[1, 2, 3], help="Filter targets by tier")
+    parser.add_argument("--label", nargs="+", help="Filter targets by label (e.g. sae-advanced-tech)")
     parser.add_argument("--vendor", nargs="+", help="Filter vendors by name")
     parser.add_argument("--runs", type=int, default=1, help="Repeat each target N times")
     parser.add_argument("--workers", type=int, default=4, help="Parallel worker threads")
@@ -111,6 +133,7 @@ def main():
 
     run_benchmark(
         tier_filter=args.tier,
+        label_filter=args.label,
         vendor_filter=args.vendor,
         runs=args.runs,
         workers=args.workers,

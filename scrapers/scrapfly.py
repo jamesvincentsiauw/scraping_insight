@@ -71,6 +71,7 @@ class ScrapFlyScraper(BaseScraper):
                 credits_used=credits,
                 estimated_cost_usd=self._estimate_cost(credits),
                 error=None if success else data.get("message", resp.text[:300]),
+                raw_content=html.encode("utf-8") if success else None,
             )
         except Exception as exc:
             elapsed_ms = (time.perf_counter() - start) * 1000

@@ -80,6 +80,7 @@ class DiffbotScraper(BaseScraper):
                 parsed_fields=parsed_fields,
                 returns_structured=True,
                 error=None if success else resp.text[:300],
+                raw_content=resp.content if success else None,  # JSON bytes
             )
         except Exception as exc:
             elapsed_ms = (time.perf_counter() - start) * 1000
